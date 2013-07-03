@@ -4444,6 +4444,10 @@ function page_header($page_title = '', $display_online_list = true, $item_id = 0
 	if ($user->data['user_id'] != ANONYMOUS)
 	{
 		$u_login_logout = append_sid("{$phpbb_root_path}ucp.$phpEx", 'mode=logout', true, $user->session_id);
+//-- mod: Prime Login Return amcsi logout mod ------------------------------------------------//
+		$redirect = ($user->page['page_dir'] || $user->page['page_name'] == "ucp.$phpEx") ? '' : '&amp;redirect=' . urlencode(str_replace('&amp;', '&', build_url(array('_f_'))));
+		$u_login_logout = append_sid("{$phpbb_root_path}ucp.$phpEx", 'mode=logout' . $redirect);
+//-- end: Prime Login Return amcsi logout mod ------------------------------------------------//
 		$l_login_logout = sprintf($user->lang['LOGOUT_USER'], $user->data['username']);
 	}
 	else

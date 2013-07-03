@@ -92,9 +92,12 @@ switch ($mode)
 		{
 			$message = ($user->data['user_id'] == ANONYMOUS) ? $user->lang['LOGOUT_REDIRECT'] : $user->lang['LOGOUT_FAILED'];
 		}
-		meta_refresh(3, append_sid("{$phpbb_root_path}index.$phpEx"));
+		// amcsi logout redirect mod
+		$red = isset($_REQUEST['redirect']) ? $_REQUEST['redirect'] : append_sid("{$phpbb_root_path}index.$phpEx");
+		meta_refresh(3, $red);
+		// /amcsi logout redirect mod
 
-		$message = $message . '<br /><br />' . sprintf($user->lang['RETURN_INDEX'], '<a href="' . append_sid("{$phpbb_root_path}index.$phpEx") . '">', '</a> ');
+		$message = $message . '<br /><br />' . sprintf($user->lang['RETURN_INDEX'], '<a href="' . $red . '">', '</a> ');
 		trigger_error($message);
 
 	break;
