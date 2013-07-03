@@ -4439,6 +4439,10 @@ function page_header($page_title = '', $display_online_list = true, $item_id = 0
 	else
 	{
 		$u_login_logout = append_sid("{$phpbb_root_path}ucp.$phpEx", 'mode=login');
+//-- mod: Prime Login Return ------------------------------------------------//
+		$redirect = ($user->page['page_dir'] || $user->page['page_name'] == "ucp.$phpEx") ? '' : '&amp;redirect=' . urlencode(str_replace('&amp;', '&', build_url(array('_f_'))));
+		$u_login_logout = append_sid("{$phpbb_root_path}ucp.$phpEx", 'mode=login' . $redirect);
+//-- end: Prime Login Return ------------------------------------------------//
 		$l_login_logout = $user->lang['LOGIN'];
 	}
 
@@ -4683,6 +4687,13 @@ function page_header($page_title = '', $display_online_list = true, $item_id = 0
 
 		'A_COOKIE_SETTINGS'		=> addslashes('; path=' . $config['cookie_path'] . ((!$config['cookie_domain'] || $config['cookie_domain'] == 'localhost' || $config['cookie_domain'] == '127.0.0.1') ? '' : '; domain=' . $config['cookie_domain']) . ((!$config['cookie_secure']) ? '' : '; secure')),
 	));
+
+//-- mod: Prime Login Return ------------------------------------------------//
+	if (($redirect = request_var('redirect', '')) != '')
+	{
+		$template->assign_var('S_LOGIN_REDIRECT', build_hidden_fields(array('redirect' => $redirect)));
+	}
+//-- end: Prime Login Return ------------------------------------------------//
 
 	// application/xhtml+xml not used because of IE
 	header('Content-type: text/html; charset=UTF-8');
