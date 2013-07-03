@@ -2679,7 +2679,17 @@ function meta_refresh($time, $url, $disable_cd_check = false)
 {
 	global $template;
 
-	$url = redirect($url, true, $disable_cd_check);
+	/**
+	 * amcsi mod
+	 * Do not let redirect() mess up the external url
+	 **/
+	$url_parts = @parse_url($url);
+	if ($url_parts['host']) {
+	}
+	else {
+		$url = redirect($url, true, $disable_cd_check);
+	}
+
 	$url = str_replace('&', '&amp;', $url);
 
 	// For XHTML compatibility we change back & to &amp;
