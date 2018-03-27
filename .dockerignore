@@ -4,7 +4,6 @@
 /phpBB/cache/*.php
 /phpBB/cache/queue.php.lock
 /phpBB/composer.phar
-/phpBB/config.php
 /phpBB/config_dev.php
 /phpBB/config_test.php
 /phpBB/ext/*

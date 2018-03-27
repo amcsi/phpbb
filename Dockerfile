@@ -15,6 +15,9 @@ COPY config/docker/apache.conf /etc/apache2/sites-available/000-default.conf
 
 RUN a2enmod rewrite
 
+RUN mkdir -p phpBB/cache
+RUN chmod a+rwx phpBB/cache
+
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
 
 
